@@ -147,24 +147,22 @@ Public Class SpriteSheetEditor
     Private Sub btn_movedown_Click(sender As Object, e As EventArgs) Handles btn_movedown.Click
         Dim i As ULong = 0
         For i = 0 To System.Convert.ToUInt64(frames.Length) Step 1
-            If lb_filelist.SelectedIndex > lb_filelist.Items.Count - 1 Then
-                With frames(System.Convert.ToInt32(i))
-                    If System.Convert.ToString(lb_filelist.SelectedItem) = .name Then
-                        Dim temp As Globals.simpleIO
-                        Dim tempimg As Image
-                        tempimg = framimgs(System.Convert.ToInt32(i + 1))
-                        temp = frames(System.Convert.ToInt32(i + 1))
-                        framimgs(System.Convert.ToInt32(i + 1)) = framimgs(System.Convert.ToInt32(i))
-                        frames(System.Convert.ToInt32(i + 1)) = frames(System.Convert.ToInt32(i))
-                        framimgs(System.Convert.ToInt32(i)) = tempimg
-                        frames(System.Convert.ToInt32(i)) = temp
-                        Dim listboxindex As UInteger = System.Convert.ToUInt32(lb_filelist.SelectedIndex + 2)
-                        lb_filelist.Items.Insert(System.Convert.ToInt32(listboxindex), lb_filelist.SelectedItem)
-                        lb_filelist.Items.RemoveAt(lb_filelist.SelectedIndex)
-                        lb_filelist.SelectedIndex = System.Convert.ToInt32(listboxindex - 1)
-                        Exit Sub
-                    End If
-                End With
+            If lb_filelist.SelectedIndex > 0 Then
+                If System.Convert.ToInt32(lb_filelist.SelectedIndex + 1) = i Then
+                    Dim temp As String
+                    Dim tempimg As Image
+                    tempimg = frames(System.Convert.ToInt32(i - 1))
+                    temp = lb_filelist.Items(System.Convert.ToInt32(i - 1)).ToString
+                    frames(System.Convert.ToInt32(i - 1)) = frames(System.Convert.ToInt32(i))
+                    lb_filelist.Items(System.Convert.ToInt32(i - 1)) = lb_filelist.Items(System.Convert.ToInt32(i))
+                    frames(System.Convert.ToInt32(i)) = tempimg
+                    lb_filelist.Items(System.Convert.ToInt32(i)) = temp
+                    Dim listboxindex As UInteger = System.Convert.ToUInt32(lb_filelist.SelectedIndex - 1)
+                    lb_filelist.Items.Insert(System.Convert.ToInt32(listboxindex), lb_filelist.SelectedItem)
+                    lb_filelist.Items.RemoveAt(lb_filelist.SelectedIndex)
+                    lb_filelist.SelectedIndex = System.Convert.ToInt32(listboxindex)
+                    Exit Sub
+                End If
             End If
         Next i
     End Sub
