@@ -100,6 +100,7 @@ Public Class SpriteSheetEditor
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
+        'make this work
     End Sub
     Private Sub btn_clear_Click(sender As Object, e As EventArgs) Handles btn_clear.Click
         lb_filelist.Items.Clear()
