@@ -136,7 +136,17 @@ Public Class SpriteSheetEditor
         frames(currlistboxindex) = tempimg
     End Sub
     Private Sub btn_movedown_Click(sender As Object, e As EventArgs) Handles btn_movedown.Click
+        Dim currlistboxindex As Integer = lb_filelist.SelectedIndex
+        Dim temp As String = String.Empty
+        Dim tempimg As Image
 
+        temp = lb_filelist.Items.Item(currlistboxindex + 1).ToString
+        lb_filelist.Items.Item(currlistboxindex + 1) = lb_filelist.Items.Item(currlistboxindex)
+        lb_filelist.Items.Item(currlistboxindex) = temp
+
+        tempimg = frames(currlistboxindex + 1)
+        frames(currlistboxindex + 1) = frames(currlistboxindex)
+        frames(currlistboxindex) = tempimg
     End Sub
 
     Private Sub btn_startpreview_Click(sender As Object, e As EventArgs) Handles btn_startpreview.Click
