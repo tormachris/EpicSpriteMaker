@@ -100,7 +100,6 @@ Public Class SpriteSheetEditor
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
-        'make this work
     End Sub
     Private Sub btn_clear_Click(sender As Object, e As EventArgs) Handles btn_clear.Click
         lb_filelist.Items.Clear()
@@ -124,48 +123,20 @@ Public Class SpriteSheetEditor
     End Sub
 
     Private Sub btn_moveup_Click(sender As Object, e As EventArgs) Handles btn_moveup.Click
-        Dim i As ULong = 0
-        For i = 0 To System.Convert.ToUInt64(frames.Length) Step 1
-            If lb_filelist.SelectedIndex > 0 Then
-                If System.Convert.ToInt32(lb_filelist.SelectedIndex + 1) = i Then
-                    Dim temp As String
-                    Dim tempimg As Image
-                    tempimg = frames(System.Convert.ToInt32(i - 1))
-                    temp = lb_filelist.Items(System.Convert.ToInt32(i - 1)).ToString
-                    frames(System.Convert.ToInt32(i - 1)) = frames(System.Convert.ToInt32(i))
-                    lb_filelist.Items(System.Convert.ToInt32(i - 1)) = lb_filelist.Items(System.Convert.ToInt32(i))
-                    frames(System.Convert.ToInt32(i)) = tempimg
-                    lb_filelist.Items(System.Convert.ToInt32(i)) = temp
-                    Dim listboxindex As UInteger = System.Convert.ToUInt32(lb_filelist.SelectedIndex - 1)
-                    lb_filelist.Items.Insert(System.Convert.ToInt32(listboxindex), lb_filelist.SelectedItem)
-                    lb_filelist.Items.RemoveAt(lb_filelist.SelectedIndex)
-                    lb_filelist.SelectedIndex = System.Convert.ToInt32(listboxindex)
-                    Exit Sub
-                End If
-            End If
-        Next i
+        Dim currlistboxindex As Integer = lb_filelist.SelectedIndex
+        Dim temp As String = String.Empty
+        Dim tempimg As Image
+
+        temp = lb_filelist.Items.Item(currlistboxindex - 1).ToString
+        lb_filelist.Items.Item(currlistboxindex - 1) = lb_filelist.Items.Item(currlistboxindex)
+        lb_filelist.Items.Item(currlistboxindex) = temp
+
+        tempimg = frames(currlistboxindex - 1)
+        frames(currlistboxindex - 1) = frames(currlistboxindex)
+        frames(currlistboxindex) = tempimg
     End Sub
     Private Sub btn_movedown_Click(sender As Object, e As EventArgs) Handles btn_movedown.Click
-        Dim i As ULong = 0
-        For i = 0 To System.Convert.ToUInt64(frames.Length) Step 1
-            If lb_filelist.SelectedIndex > 0 Then
-                If System.Convert.ToInt32(lb_filelist.SelectedIndex + 1) = i Then
-                    Dim temp As String
-                    Dim tempimg As Image
-                    tempimg = frames(System.Convert.ToInt32(i - 1))
-                    temp = lb_filelist.Items(System.Convert.ToInt32(i - 1)).ToString
-                    frames(System.Convert.ToInt32(i - 1)) = frames(System.Convert.ToInt32(i))
-                    lb_filelist.Items(System.Convert.ToInt32(i - 1)) = lb_filelist.Items(System.Convert.ToInt32(i))
-                    frames(System.Convert.ToInt32(i)) = tempimg
-                    lb_filelist.Items(System.Convert.ToInt32(i)) = temp
-                    Dim listboxindex As UInteger = System.Convert.ToUInt32(lb_filelist.SelectedIndex - 1)
-                    lb_filelist.Items.Insert(System.Convert.ToInt32(listboxindex), lb_filelist.SelectedItem)
-                    lb_filelist.Items.RemoveAt(lb_filelist.SelectedIndex)
-                    lb_filelist.SelectedIndex = System.Convert.ToInt32(listboxindex)
-                    Exit Sub
-                End If
-            End If
-        Next i
+
     End Sub
 
     Private Sub btn_startpreview_Click(sender As Object, e As EventArgs) Handles btn_startpreview.Click
