@@ -45,7 +45,7 @@ Public Class BitmapResizer
         Dim modifiedBitmap As Drawing.Bitmap
         For Each bitmap In _listOfBitmaps
             indexOfCurrentBitmap = _listOfBitmaps.IndexOf(bitmap)
-            modifiedBitmap = BitmapResizer.ResizeImage(bitmap, targetWidth, targetHeight)
+            modifiedBitmap = ResizeImage(bitmap, targetWidth, targetHeight)
             _listOfBitmaps.RemoveAt(indexOfCurrentBitmap)
             _listOfBitmaps.Insert(indexOfCurrentBitmap, modifiedBitmap)
         Next bitmap
