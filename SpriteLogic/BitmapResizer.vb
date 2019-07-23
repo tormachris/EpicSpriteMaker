@@ -106,6 +106,5 @@ Public Class BitmapResizer
     Public Overloads Shared Function ResizeImageAsync(ByVal bmSource As Drawing.Bitmap, ByVal targetWidth As Int32, ByVal targetHeight As Int32) As Task(Of Drawing.Bitmap)
         Return Task.Run(Function() ResizeImage(bmSource, targetWidth, targetHeight))
     End Function
-
 #End Region
 End Class
