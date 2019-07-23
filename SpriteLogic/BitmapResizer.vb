@@ -51,13 +51,13 @@ Public Class BitmapResizer
         Next bitmap
     End Sub
 
-    Public Overloads Shared Function ResizeImage(ByRef sourceImage As Drawing.Image, ByVal targetWidth As Int32, ByVal targetHeight As Int32) As Drawing.Bitmap
+    Public Overloads Shared Function ResizeImage(ByVal sourceImage As Drawing.Image, ByVal targetWidth As Int32, ByVal targetHeight As Int32) As Drawing.Bitmap
         Dim bmSource As Drawing.Bitmap = New Drawing.Bitmap(sourceImage)
 
         Return ResizeImage(bmSource, targetWidth, targetHeight)
     End Function
 
-    Public Overloads Shared Function ResizeImage(ByRef bmSource As Drawing.Bitmap, ByVal targetWidth As Int32, ByVal targetHeight As Int32) As Drawing.Bitmap
+    Public Overloads Shared Function ResizeImage(ByVal bmSource As Drawing.Bitmap, ByVal targetWidth As Int32, ByVal targetHeight As Int32) As Drawing.Bitmap
         Dim bmDest As New Drawing.Bitmap(targetWidth, targetHeight, Drawing.Imaging.PixelFormat.Format32bppArgb)
 
         Dim sourceAspectRatio As Double = bmSource.Width / bmSource.Height
@@ -94,5 +94,18 @@ Public Class BitmapResizer
 
         Return bmDest
     End Function
+#End Region
+
+#Region "Async Logic"
+    Public Function ResizeAllAsync(ByVal targetWidth As Int32, ByVal targetHeight As Int32) As Task
+        Return Task.Run(Sub() ResizeAll(targetWidth, targetHeight))
+    End Function
+    Public Overloads Shared Function ResizeImageAsync(ByVal sourceImage As Drawing.Image, ByVal targetWidth As Int32, ByVal targetHeight As Int32) As Task(Of Drawing.Bitmap)
+        Return Task.Run(Function() ResizeImage(sourceImage, targetWidth, targetHeight))
+    End Function
+    Public Overloads Shared Function ResizeImageAsync(ByVal bmSource As Drawing.Bitmap, ByVal targetWidth As Int32, ByVal targetHeight As Int32) As Task(Of Drawing.Bitmap)
+        Return Task.Run(Function() ResizeImage(bmSource, targetWidth, targetHeight))
+    End Function
+
 #End Region
 End Class
