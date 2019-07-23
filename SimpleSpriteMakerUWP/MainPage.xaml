@@ -8,7 +8,59 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
 
+    <Page.Resources>
+        <Style x:Key="FileButtonStyle" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="12,8"/>
+        </Style>
+        <Color x:Key="ListViewBackground">#FFE8E8E8</Color>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Top left corner: list with buttons -->
+        <RelativePanel Grid.Row="0" Grid.Column="0" BorderThickness="1" BorderBrush="Transparent" Padding="12">
+            <TextBlock Margin="16, 0, 0, 12" Style="{StaticResource TitleTextBlockStyle}"
+                Name="FileListLabel" Text="File list" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True"/>
+
+            <ListView Name="FileListView" Background="{StaticResource ListViewBackground}" ItemsSource="{x:Bind FileList, Mode=TwoWay}" 
+                      RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="FileListLabel" RelativePanel.AlignBottomWithPanel="True" RelativePanel.LeftOf="FileButtonPanel"
+                      BorderBrush="DarkGray" BorderThickness="2">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:MockFile">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{x:Bind Name}" FontSize="12"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <StackPanel Name="FileButtonPanel" Background="Transparent"
+                        RelativePanel.AlignBottomWithPanel="True" RelativePanel.Below="FileListLabel" RelativePanel.AlignRightWithPanel="True" >
+                <Button Content="Add" Style="{StaticResource FileButtonStyle}" Click="Button_Click" Name="AddButton"/>
+                <Button Content="Delete" Style="{StaticResource FileButtonStyle}"/>
+                <Button Content="Clear"  Style="{StaticResource FileButtonStyle}"/>
+                <Button Content="Move up"  Style="{StaticResource FileButtonStyle}"/>
+                <Button Content="Move down"  Style="{StaticResource FileButtonStyle}"/>
+            </StackPanel>
+        </RelativePanel>
+
+        <!-- Preview window -->
+        <RelativePanel Grid.Row="0" Grid.Column="1" Padding="12" BorderBrush="Transparent" BorderThickness="1">
+            <TextBlock Margin="16, 0, 0, 12" Style="{StaticResource TitleTextBlockStyle}"
+                Name="PreviewLabel" Text="Preview window" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True"/>
+            <Image Source="Assets/placeholder.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform"
+                   RelativePanel.Below="PreviewLabel" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+                   />
+        </RelativePanel>
     </Grid>
 </Page>
